@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+spec:
+  ports:
+    - port: 9092
+  selector:
+    app: kafka
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+spec:
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+        - name: kafka
+          image: apache/kafka:latest
+          env:
+            # 1. 노드 식별: 클러스터 내에서 이 브로커가 몇 번인지 지정 (정수)
+            - name: KAFKA_CFG_NODE_ID
+              value: "1"
+
+            # 2. 역할 부여: 이 서버가 '관리자(controller)' 역할과 '데이터 저장소(broker)' 역할을 동시에 수행함
+            - name: KAFKA_CFG_PROCESS_ROLES
+              value: "controller,broker"
+
+            # 3. 리스너 설정: 내부적으로 통신을 기다릴 포트 정의 (9092는 실제 통신용, 9093은 관리용)
+            - name: KAFKA_CFG_LISTENERS
+              value: "PLAINTEXT://:9092,CONTROLLER://:9093"
+
+            # 4. 보안 프로토콜 매핑: 각 리스너가 어떤 보안 방식을 쓸지 지정 (여기선 둘 다 암호화 없는 평문)
+            - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"
+
+            # 5. 관리자 투표단: 관리자 역할을 할 노드들의 목록.
+            # KRaft에서는 관리자들끼리 투표로 리더를 뽑는데, 여기선 자기 자신(localhost:9093)을 지정.
+            - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
+              value: "1@localhost:9093"
+
+            # 6. 관리용 리스너 이름 지정: 위에서 정의한 포트 중 어떤 것이 관리용인지 명시
+            - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
+              value: "CONTROLLER"
+
+            # 7. 외부 광고 주소: 클라이언트(movie-service 등)가 실제로 접속할 주소.
+            # 중요! 위 Service의 metadata.name이 'kafka'라면 여기도 'kafka:9092'여야 함.
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: "PLAINTEXT://kafka:9092"
+
+            # 8. 클러스터 고유 ID: 같은 클러스터에 속한 브로커들은 이 ID가 모두 같아야 함.
+            - name: KAFKA_KRAFT_CLUSTER_ID
+              value: "abcdefghijklmnopqrstuv"
+
+            # 9. 인증 생략 설정: 평문(Plaintext) 접속을 허용함 (학습/테스트용)
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"

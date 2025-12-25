@@ -1,0 +1,3 @@
+rootProject.name = 'used-market-platform'
+
+include 'api-gateway', 'product-service'
