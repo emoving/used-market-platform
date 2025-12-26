@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: payment-service
+
+  cloud:
+    kubernetes:
+      discovery:
+        enabled: true
+        # 로컬 테스트 시 모든 네임스페이스를 뒤질 필요가 없으므로 현재 네임스페이스만 사용
+        all-namespaces: false
+      # 이 설정을 명시적으로 꺼주거나 fabric8을 사용하면 'discovery-server-url' 에러가 사라집니다.
+      config:
+        enabled: false # 일단 ConfigMap 연동을 안 쓰신다면 꺼두는 게 안전합니다.
+
+  datasource:
+    url: jdbc:mysql://mysql:3306/paymentDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: "1234"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: true
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: payment-group
+      properties:
+        spring.json.trusted.packages: "*"
