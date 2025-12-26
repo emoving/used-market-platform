@@ -26,8 +26,14 @@ spec:
           image: mysql:8.0
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "1234"  # 비밀번호 설정
-            - name: MYSQL_DATABASE
-              value: "moviedb" # 사용할 DB 이름
+              value: "1234"
           ports:
             - containerPort: 3306
+          # --- 추가된 부분 ---
+          volumeMounts:
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-script
+          configMap:
+            name: mysql-init-sql

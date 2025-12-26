@@ -1,31 +1,31 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: movie-service
+  name: product-service
 spec:
   ports:
     - port: 8080
   selector:
-    app: movie-service
+    app: product
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: movie-service
+  name: product-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: movie-service
+      app: product
 
   template:
     metadata:
       labels:
-        app: movie-service
+        app: product
     spec:
       containers:
-        - name: movie-service
-          image: movie-service:latest
+        - name: product-service
+          image: product-service:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
