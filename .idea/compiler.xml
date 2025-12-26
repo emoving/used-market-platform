@@ -2,29 +2,78 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
         </processorPath>
+        <module name="used-market-platform.payment-service.main" />
         <module name="used-market-platform.product-service.main" />
+        <module name="used-market-platform.common.main" />
+        <module name="used-market-platform.order-service.main" />
+        <module name="used-market-platform.search-service.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="21">
+      <module name="common" target="21" />
+      <module name="common.main" target="21" />
+      <module name="common.test" target="21" />
+      <module name="delivery" target="21" />
+      <module name="delivery.main" target="21" />
+      <module name="delivery.test" target="21" />
+      <module name="gateway" target="21" />
+      <module name="gateway.main" target="21" />
+      <module name="gateway.test" target="21" />
+      <module name="payment" target="21" />
+      <module name="payment.main" target="21" />
+      <module name="payment.test" target="21" />
+      <module name="product" target="21" />
+      <module name="product.main" target="21" />
+      <module name="product.test" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="common" options="-parameters" />
+      <module name="common.main" options="-parameters" />
+      <module name="common.test" options="-parameters" />
+      <module name="delivery" options="-parameters" />
+      <module name="delivery.main" options="-parameters" />
+      <module name="delivery.test" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="gateway.main" options="-parameters" />
       <module name="gateway.test" options="-parameters" />
+      <module name="payment" options="-parameters" />
+      <module name="payment.main" options="-parameters" />
+      <module name="payment.test" options="-parameters" />
       <module name="product" options="-parameters" />
       <module name="product.main" options="-parameters" />
       <module name="product.test" options="-parameters" />
+      <module name="search" options="-parameters" />
+      <module name="search.main" options="-parameters" />
+      <module name="search.test" options="-parameters" />
       <module name="used-market-platform.api-gateway" options="-parameters" />
       <module name="used-market-platform.api-gateway.main" options="-parameters" />
       <module name="used-market-platform.api-gateway.test" options="-parameters" />
+      <module name="used-market-platform.common" options="-parameters" />
+      <module name="used-market-platform.common.main" options="-parameters" />
+      <module name="used-market-platform.common.test" options="-parameters" />
+      <module name="used-market-platform.delivery-service" options="-parameters" />
+      <module name="used-market-platform.delivery-service.main" options="-parameters" />
+      <module name="used-market-platform.delivery-service.test" options="-parameters" />
+      <module name="used-market-platform.order-service" options="-parameters" />
+      <module name="used-market-platform.order-service.main" options="-parameters" />
+      <module name="used-market-platform.order-service.test" options="-parameters" />
+      <module name="used-market-platform.payment-service" options="-parameters" />
+      <module name="used-market-platform.payment-service.main" options="-parameters" />
+      <module name="used-market-platform.payment-service.test" options="-parameters" />
       <module name="used-market-platform.product-service" options="-parameters" />
       <module name="used-market-platform.product-service.main" options="-parameters" />
       <module name="used-market-platform.product-service.test" options="-parameters" />
+      <module name="used-market-platform.search-service" options="-parameters" />
+      <module name="used-market-platform.search-service.main" options="-parameters" />
+      <module name="used-market-platform.search-service.test" options="-parameters" />
     </option>
   </component>
 </project>

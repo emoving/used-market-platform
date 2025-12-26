@@ -1,3 +1,3 @@
 rootProject.name = 'used-market-platform'
 
-include 'api-gateway', 'product-service'
+include 'api-gateway', 'common', 'product-service', 'payment-service', 'order-service', 'search-service'

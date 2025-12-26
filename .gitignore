@@ -1,0 +1,16 @@
+# Gradle build artifacts
+.gradle/
+build/
+
+# IntelliJ IDEA project files
+.idea/
+*.iml
+out/
+
+# Local configuration and logs
+local.properties
+.DS_Store
+
+# (선택) 만약 빌드 결과물인 jar/war도 제외하고 싶다면
+# *.jar
+# *.war
