@@ -6,9 +6,7 @@ spring:
     kubernetes:
       discovery:
         enabled: true
-        # 로컬 테스트 시 모든 네임스페이스를 뒤질 필요가 없으므로 현재 네임스페이스만 사용
         all-namespaces: false
-      # 이 설정을 명시적으로 꺼주거나 fabric8을 사용하면 'discovery-server-url' 에러가 사라집니다.
       config:
         enabled: false # 일단 ConfigMap 연동을 안 쓰신다면 꺼두는 게 안전합니다.
 

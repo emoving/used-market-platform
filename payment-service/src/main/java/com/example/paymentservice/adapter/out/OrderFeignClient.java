@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.example.common.dto.PaymentReservationResponse;
 
-@FeignClient(name = "order-service", url = "http://order-service:8080")
+@FeignClient(name = "order-service")
 public interface OrderFeignClient {
 
 	@PostMapping("/orders/{orderId}")
 	PaymentReservationResponse pend(
-		@PathVariable("orderId") Long orderId,
+		@PathVariable Long orderId,
 		@RequestHeader("X-Saga-Id") String sagaId
 	);
 }

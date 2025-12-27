@@ -31,10 +31,11 @@ public class PaymentService implements PaymentUseCase {
 	@Override
 	public void processPayment(Long orderId, Integer amount, String sagaId) {
 		String eventId = UUID.randomUUID().toString();
-		PaymentReservationResponse res = null;
+		Long productId = null;
 
 		try {
-			res = orderClientAdapter.reservePayment(orderId, sagaId);
+			PaymentReservationResponse res = orderClientAdapter.reservePayment(orderId, sagaId);
+			productId = res.productId();
 
 			if (!amount.equals(res.price())) {
 				throw new IllegalArgumentException("결제 금액 불일치");
@@ -43,11 +44,10 @@ public class PaymentService implements PaymentUseCase {
 			paymentRepository.save(Payment.of(orderId, res.price()));
 			eventLogRepository.save(PaymentEventLog.of(eventId, sagaId));
 
-			eventPublisher.publishEvent(new PaymentCompletedEvent(sagaId, eventId, orderId, res.productId()));
+			eventPublisher.publishEvent(new PaymentCompletedEvent(sagaId, eventId, orderId, productId));
+
 		} catch (Exception e) {
 			eventLogRepository.save(PaymentEventLog.of(eventId, sagaId));
-
-			Long productId = (res != null) ? res.productId() : null;
 
 			eventPublisher.publishEvent(new PaymentFailedEvent(sagaId, eventId, orderId, productId));
 

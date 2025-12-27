@@ -25,7 +25,7 @@ public class PaymentEventPublisher {
 	}
 
 	@Async
-	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+	@TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
 	public void handlePaymentFailed(PaymentFailedEvent event) {
 		kafkaTemplate.send(KafkaTopics.PAYMENT_FAILED, event.sagaId(), event);
 	}
