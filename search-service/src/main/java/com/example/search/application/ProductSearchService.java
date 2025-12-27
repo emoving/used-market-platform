@@ -30,4 +30,19 @@ public class ProductSearchService implements ProductSearchUseCase {
 
 		return searchRepository.findByCategory(category);
 	}
+
+	@Override
+	public void save(ProductDocument productDocument) {
+		searchRepository.save(productDocument);
+	}
+
+	@Override
+	public void update(Long productId, String status) {
+		searchRepository.findById(productId)
+			.ifPresent(doc -> {
+				doc.updateStatus(status);
+
+				searchRepository.save(doc);
+			});
+	}
 }

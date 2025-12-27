@@ -8,4 +8,8 @@ public interface ProductSearchUseCase {
 	List<ProductDocument> searchByTitle(String keyword);
 
 	List<ProductDocument> searchByCategory(String category, String keyword);
+
+	void save(ProductDocument productDocument);
+
+	void update(Long eventId, String status);
 }
