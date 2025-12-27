@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: order-service
+  namespace: default
 spec:
   ports:
     - port: 8080
@@ -12,17 +13,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: order-service
+  namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: order
-
   template:
     metadata:
       labels:
         app: order
     spec:
+      serviceAccountName: order-sa
       containers:
         - name: order-service
           image: order-service:latest

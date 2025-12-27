@@ -6,7 +6,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.example.common.dto.PaymentReservationResponse;
+import com.example.common.dto.ProductResponse;
 import com.example.common.event.OrderCreatedEvent;
+import com.example.order.adapter.out.ProductClientAdapter;
 import com.example.order.application.in.OrderUseCase;
 import com.example.order.application.out.EventLogJpaRepository;
 import com.example.order.application.out.OrderJpaRepository;
@@ -22,15 +24,22 @@ import lombok.RequiredArgsConstructor;
 public class OrderService implements OrderUseCase {
 
 	private final ApplicationEventPublisher eventPublisher;
+	private final ProductClientAdapter productClientAdapter;
 	private final OrderJpaRepository orderJpaRepository;
 	private final EventLogJpaRepository eventLogJpaRepository;
 
 	@Override
-	public long createOrder(Long productId, Integer price, String sagaId) {
-		Order savedOrder = orderJpaRepository.save(Order.created(productId, price));
+	public long createOrder(Long productId, String sagaId) {
+		ProductResponse product = productClientAdapter.getProduct(productId, sagaId);
+
+		if (product == null) {
+			throw new IllegalStateException();
+		}
+
+		Order savedOrder = orderJpaRepository.save(Order.created(productId, product.price()));
 
 		eventPublisher.publishEvent(
-			new OrderCreatedEvent(sagaId, UUID.randomUUID().toString(), savedOrder.getId(), productId, price));
+			new OrderCreatedEvent(sagaId, UUID.randomUUID().toString(), savedOrder.getId(), productId, product.price()));
 
 		return savedOrder.getId();
 	}

@@ -8,6 +8,14 @@ spring:
     password: "1234"
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  cloud:
+    kubernetes:
+      discovery:
+        enabled: true
+        all-namespaces: false
+      config:
+        enabled: false # 일단 ConfigMap 연동을 안 쓰신다면 꺼두는 게 안전합니다.
+
   jpa:
     hibernate:
       ddl-auto: update

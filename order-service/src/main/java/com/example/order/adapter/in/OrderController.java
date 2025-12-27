@@ -26,7 +26,7 @@ public class OrderController {
 	public ResponseEntity<Long> createOrder(@RequestBody OrderRequest request) {
 		String sagaId = UUID.randomUUID().toString();
 
-		long orderId = orderUseCase.createOrder(request.productId(), request.price(), sagaId);
+		long orderId = orderUseCase.createOrder(request.productId(), sagaId);
 
 		return ResponseEntity.ok(orderId);
 	}

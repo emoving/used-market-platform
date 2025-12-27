@@ -3,7 +3,7 @@ package com.example.order.application.in;
 import com.example.common.dto.PaymentReservationResponse;
 
 public interface OrderUseCase {
-	long createOrder(Long productId, Integer price, String sagaId);
+	long createOrder(Long productId, String sagaId);
 
 	void completeOrder(Long orderId, String sagaId, String eventId);
 

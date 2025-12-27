@@ -2,22 +2,29 @@ package com.example.order.domain;
 
 import com.example.common.BaseEntity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "orders")
+@Table(
+	name = "orders",
+	uniqueConstraints = {
+		@UniqueConstraint(
+			name = "uk_order_product",
+			columnNames = {"order_id", "product_id"}
+		)
+	}
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends BaseEntity {
 
-	@Column(unique = true)
 	private Long productId;
 
 	private Integer price;
