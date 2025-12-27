@@ -29,6 +29,11 @@ public class ProductService implements ProductUseCase {
 	private final ApplicationEventPublisher eventPublisher;
 
 	@Override
+	public Product getProduct(Long productId) {
+		return productJpaRepository.findById(productId).orElseThrow();
+	}
+
+	@Override
 	public void registerProduct(ProductRequest request) {
 		Product product = Product.of(request.title(), request.price(), request.category());
 
