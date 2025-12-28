@@ -24,7 +24,7 @@
 ## 3. 시스템 아키텍처
 ![Architecture](docs/Architecture.png)
 - **Spring Cloud Gateway**를 단일 진입점으로 설정
-- **동기(Feign)**와 **비동기(Kafka)** 통신을 혼합하여 시스템 성능과 신뢰성 최적화
+- **동기(Feign)**, **비동기(Kafka)** 통신을 혼합하여 시스템 성능과 신뢰성 최적화
 
 <br>
 
